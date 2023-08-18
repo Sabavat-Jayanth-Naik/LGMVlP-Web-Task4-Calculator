@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CALCULATOR</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            font-family: 'Montserrat', sans-serif;
+            background-image: url('https://media.istockphoto.com/id/1419844586/vector/stem-blue-horizontal-frame-vector-education-bright-illustration.jpg?s=612x612&w=0&k=20&c=-A1eYLYulujNsiM26lkVy7qMT_Hp82N5EtKHSFRmigk=');
+            margin: 0;
+            padding: 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mx-auto {
+            margin: auto;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .flex-col {
+            flex-direction: column;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .button {
+            padding: 20px;
+            width: 66px;
+            margin: 0 3px;
+            border: 2px solid black;
+            border-radius: 9px;
+            cursor: pointer;
+            background-color: aqua;
+            font-size: 20px;
+        }
+
+        .row {
+            margin: 8px 0;
+        }
+
+        .row input {
+            margin: 0;
+            width: 291px;
+            padding: 10px 0px;
+            border: 2px solid black;
+            border-radius: 5px;
+            font-size: 23px;
+            background-color: bisque;
+        }
+
+        .button:hover {
+            background-color: rgb(8, 201, 235);
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text-center" style="color: azure; padding-bottom: 10px;">Basic Calculator</h1>
+
+    <div class="container items-center mx-auto flex flex-col" style="background-color: rgb(92, 108, 248); width: 350px; border-radius: 20px; height: 500px; padding-top: 20px;">
+        <div class="row">
+            <input type="text" class="input" id="inputField">
+        </div>
+        <div class="row">
+            <button class="button" id="resetButton">C</button>
+            <button class="button">%</button>
+            <button class="button">M+</button>
+            <button class="button">X</button>
+        </div>
+        <div class="row">
+            <button class="button">7</button>
+            <button class="button">8</button>
+            <button class="button">9</button>
+            <button class="button">*</button>
+        </div>
+        <div class="row">
+            <button class="button">4</button>
+            <button class="button">5</button>
+            <button class="button">6</button>
+            <button class="button">/</button>
+        </div>
+        <div class="row">
+            <button class="button">1</button>
+            <button class="button">2</button>
+            <button class="button">3</button>
+            <button class="button">+</button>
+        </div>
+        <div class="row">
+            <button class="button">0</button>
+            <button class="button">.</button>
+            <button class="button" id="equalButton">=</button>
+            <button class="button">-</button>
+        </div>
+    </div>
+    <script>
+        let string = "";
+        let inputField = document.getElementById('inputField');
+        let resetButton = document.getElementById('resetButton');
+        let equalButton = document.getElementById('equalButton');
+        
+        function calculate() {
+            string = eval(string);
+            inputField.value = string;
+        }
+
+        let buttons = document.querySelectorAll('.button');
+        Array.from(buttons).forEach((button) => {
+            button.addEventListener('click', (e) => {
+                if (e.target.innerHTML === '=') {
+                    calculate();
+                } else if (e.target.innerHTML === 'C') {
+                    string = "";
+                    inputField.value = string;
+                } else if (e.target.innerHTML === 'X') {
+                    string = string.slice(0, -1);
+                    inputField.value = string;
+                } else {
+                    string = string + e.target.innerHTML;
+                    inputField.value = string;
+                }
+            });
+        });
+
+        inputField.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                calculate();
+            }
+        });
+
+        // Enable keyboard input for calculator buttons
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                calculate();
+            } else if (/[0-9%\/*\-+.]/.test(e.key)) {
+                string += e.key;
+                inputField.value = string;
+            } else if (e.key === 'Backspace') {
+                string = string.slice(0, -1);
+                inputField.value = string;
+            } else if (e.key === 'c' || e.key === 'C') {
+                string = "";
+                inputField.value = string;
+            }
+        });
+    </script>
+</body>
+</html>
